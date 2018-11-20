@@ -6,67 +6,44 @@
 	AUTH = {username: '2E5Vw7WUCm', password: '0754e0cbf6df85c40be0715e643c9f1c'}
 
 
-	def punto_uno
-	    asignatura= "/docencia/asignaturas/{INF}/cursos"
-	    respuesta = HTTParty.get(URI.encode(URL+asignatura), basic_auth: AUTH)
-	    nombres = []
-		respuesta.each do |asignatura|
-			nombres << asignatura[nombre]
-		end
-		[
-				{
-						"nombre": "string",
-						"codigo": "string",
-						"departamento": {
-								"facultad": {
-										"sigla": "string",
-										"nombre": "string"
-								},
-								"nombre": "string",
-								"id": 0
-						},
-						"creditos": 0,
-						"horasSemanales": 0,
-						"fechaCreacion": "2018-11-20T03:51:35.153Z"
-				}
-		]
-	    File.open("peraltarojas","w") do |f|
-	    	f.write(aux)
-	    end
+	def anio
+  docente = '/academia/docentes'
+  respuesta = HTTParty.get(URL.encode+docente, basic_auth: AUTH)
 
-	end
+  lista = []
+  lista2 = []
+  respuesta.each do |data|
+    lista2 = data['fechaNacimiento']
+    if lista2 < '1980'
+    lista << data['nombres']
+      lista << data['fechaNacimiento']
+    end
+    File.open('peraltarojas',"w") do |f|
+      f.puts lista
+    end
+  end
 
-	def punto_dos
-	    asignatura= "/docencia/asignaturas/{INF}/cursos"
-	    respuesta = HTTParty.get(URI.encode(URL+asignatura), basic_auth: AUTH)
-	    aux = []
-	    ct = 0
-	    respuesta.each do |asignatura|
-	    	if f['curso']['anio']==2015	
-	    		ct = ct + 1
-	    		aux << "Las asignaturas de informatica el 2015 fueron #{ct}"
-	   		end	
-			end
-			{
-					"nombre": "string",
-					"codigo": "string",
-					"departamento": {
-							"facultad": {
-									"sigla": "string",
-									"nombre": "string"
-							},
-							"nombre": "string",
-							"id": 0
-					},
-					"creditos": 0,
-					"horasSemanales": 0,
-					"fechaCreacion": "2018-11-20T03:55:33.830Z"
-			}
-	    File.open("peraltarojas","w") do |f|
-	    	f.write(aux)
-	    end
+  puts lista
 
-	end   
+end
+
+def asignaturas1
+  asignatura = '/docencia/asignaturas'
+  respuesta = HTTParty.get(URL.encode+asignatura, basic_auth: AUTH)
+  lista = []
+  lista2 = []
+  respuesta.each do |data|
+    lista2 = data['codigo']
+    if lista2.include? "INF"
+      lista << data['nombre']
+      lista << data['codigo']
+    end
+    File.open('peraltarojas',"w") do |f|
+      f.puts lista
+    end
+  end
+  puts lista
+end
 
 	def punto_tres
 	    docentes= "/academia/docentes"
