@@ -45,20 +45,23 @@ def punto_uno
   puts lista
 end
 
-	def punto_dos
-	    docentes= "/academia/docentes"
-	    respuesta = HTTParty.get(URI.encode(URL+docentes), basic_auth: AUTH)
-	    anio = []
-	    respuesta.each do |docentes|
-	    	anio << f['anio']
-	    	if f['anio']<=1980 
-	    		promedio_uno = promedio_uno + f['nota'].to_f
-	    		ct_uno = ct_uno + 1
-	    	end
-	    end
-	    filtro = anio.uniq 
-	    
-
+def punto_dos
+  #asignatura2015 = '/docencia/asignaturas/'{codigo}'/cursos'
+  respuesta = HTTParty.get(URL.encode+asignatura2015, basic_auth: AUTH)
+  lista = []
+  lista2 = []
+  respuesta.each do |data|
+    lista2 = data['anio']
+    if lista2 == 2015
+    lista << data['asignatura']
+    lista << data['anio']
+    end
+    File.open('peraltarojas',"w") do |f|
+      f.puts lista
+    end
+  end
+  puts lista
+end
 	end
 
 	def menu
