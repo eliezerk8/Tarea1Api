@@ -6,7 +6,7 @@
 	AUTH = {username: '2E5Vw7WUCm', password: '0754e0cbf6df85c40be0715e643c9f1c'}
 
 
-	def anio
+	def punto_tres
   docente = '/academia/docentes'
   respuesta = HTTParty.get(URL.encode+docente, basic_auth: AUTH)
 
@@ -27,7 +27,7 @@
 
 end
 
-def asignaturas1
+def punto_uno
   asignatura = '/docencia/asignaturas'
   respuesta = HTTParty.get(URL.encode+asignatura, basic_auth: AUTH)
   lista = []
@@ -45,7 +45,7 @@ def asignaturas1
   puts lista
 end
 
-	def punto_tres
+	def punto_dos
 	    docentes= "/academia/docentes"
 	    respuesta = HTTParty.get(URI.encode(URL+docentes), basic_auth: AUTH)
 	    anio = []
@@ -72,7 +72,6 @@ end
 			when 1 then punto_uno
 			when 2 then punto_dos
 			when 3 then punto_tres
-			when 4 then punto_cuatro
 			else 	
 		end
 	end
